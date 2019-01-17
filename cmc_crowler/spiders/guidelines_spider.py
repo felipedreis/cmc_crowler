@@ -25,6 +25,9 @@ class GuidelinesSpyder(scrapy.Spider):
         yield scrapy.Request(url=self.base_site+session_link, callback=self.parse_guidelines)
 
     def parse_guidelines(self, response):
+        response.xpath("//div[@id='conteudo']/fieldset[3]/table/td/a/@href").extract() # links
+        response.xpath("//div[@id='conteudo']/fieldset[3]/table/td/a/text()").extract() #titles
+         response.xpath("//div[@id='conteudo']/fieldset[3]/table/td/a/../text()") #authors
         fieldset = response.xpath("//div[@id='conteudo']/fieldset")[2]
         rows = fieldset.xpath('//tr')
         self.log(rows)
